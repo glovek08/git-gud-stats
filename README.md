@@ -13,3 +13,9 @@ fastapi dev main.py
 ```
 
 
+Set up your GH Token in an .env
+```
+GITHUB_TOKEN=<Your token>
+```
+
+
