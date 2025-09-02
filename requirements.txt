@@ -2,3 +2,5 @@ fastapi[standard]
 starlette
 uvicorn
 pydantic
+httpx
+python-dotenv
