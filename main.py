@@ -19,6 +19,7 @@ app.add_middleware(
 
 bearer_scheme = HTTPBearer(auto_error=False)
 GITHUB_API_URL = "https://api.github.com/users/"
+GITHUB_GRAPHQL_URL = "https://api.github.com/graphql" # added new route
 
 def build_headers(token: Optional[str]) -> Dict[str, str]:
     h = {
@@ -110,3 +111,61 @@ def debug_token(credentials: Optional[HTTPAuthorizationCredentials] = Security(b
     data["effective_source"] = "header" if header_present else ("env" if env_present else None)
     data["received"] = header_present or env_present
     return data
+
+# added new endpoint for do all request together
+@app.get("/graphql-user/{username}")
+async def get_graphql_user_data(username: str, credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme)):
+    token = extract_token(credentials)
+    if not token:
+        raise HTTPException(status_code=401, detail="Github token is required")
+
+    headers = build_headers(token)
+    headers['Content-type'] = 'application/json'  # graphql need define the Content-type
+
+    # query with name of user , list of last 5 modifying repos and language used for the user on these repos
+    query = """
+        query($login: String!) {
+          user(login: $login) {
+            name
+            repositories(first: 5, orderBy: {field: PUSHED_AT, direction: DESC}) {
+              nodes {
+                name
+                languages(first: 5, orderBy: {field: SIZE, direction: DESC}) {
+                  edges {
+                    size
+                    node {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    """
+
+    # define body of request
+    body = {
+        "query": query,
+        "variables": {
+            "login": username
+        }
+    }
+
+    async with httpx.AsyncClient(timeout=15) as client:
+        resp = await client.post(GITHUB_GRAPHQL_URL, headers=headers, json=body)
+
+        if resp.status_code != 200:
+            raise HTTPException(status_code=resp.status_code, detail=resp.text)
+        
+        data = resp.json()
+
+        # manage fails of graphql
+        if 'errors' in data:
+            raise HTTPException(status_code=400, detail=data['errors'])
+
+        # manage if user not found
+        if data['data']['user'] is None:
+            raise HTTPException(status_code=400, detail="user not found")
+
+        return data['data']['user']
