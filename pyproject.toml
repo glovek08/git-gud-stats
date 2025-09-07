@@ -1,7 +1,7 @@
 [project]
 name = "FastAPI-app"
 version = "0.1.0"
-description = "A simple FastAPI application."
+description = "A simple GitHub app for fetching stats."
 
 readme = "README.md"
 requires-python = ">=3.11"
