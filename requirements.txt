@@ -1,6 +1,6 @@
-fastapi[standard]
-starlette
+fastapi
 uvicorn
-pydantic
 httpx
+pydantic
+pytest
 python-dotenv

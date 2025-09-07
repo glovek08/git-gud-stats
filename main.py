@@ -3,12 +3,14 @@ from fastapi import FastAPI, HTTPException, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.openapi.utils import get_openapi
+from typing import Any
 import os
 import httpx
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
 load_dotenv()
 app = FastAPI()
+
 # CORS for a Svelte dev server
 app.add_middleware(
     CORSMiddleware,
@@ -18,6 +20,7 @@ app.add_middleware(
 )
 
 bearer_scheme = HTTPBearer(auto_error=False)
+
 GITHUB_API_URL = "https://api.github.com/users/"
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql" # added new route
 
@@ -63,7 +66,7 @@ async def get_github_user(
             raise HTTPException(status_code=resp.status_code, detail=resp.text)
         return resp.json()
 
-# shows Authorize button
+# shows Authorize button in Swagger UI
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -82,7 +85,7 @@ app.openapi = custom_openapi
 
 # Debug endpoint to verify if swagger is sending Authorization header
 @app.get("/debug/token")
-def debug_token(credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme)):
+def debug_token(credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme)) -> Dict[str, Any]:
     """Diagnose how token is (or isn't) being received.
 
     Priority order:
@@ -92,17 +95,15 @@ def debug_token(credentials: Optional[HTTPAuthorizationCredentials] = Security(b
     header_present = bool(credentials)
     env_token = os.getenv("GITHUB_TOKEN")
     env_present = bool(env_token)
-    data = {
+    data: Dict[str, Any] = {
         "header_received": header_present,
         "env_present": env_present,
     }
     if header_present:
         token = credentials.credentials or ""
-        data.update({
-            "scheme": credentials.scheme,
-            "header_token_length": len(token),
-            "header_preview_start": token[:4],
-        })
+        data["scheme"] = credentials.scheme
+        data["header_token_length"] = len(token)
+        data["header_preview_start"] = token[:4]
     if env_present:
         data.update({
             "env_token_length": len(env_token),
