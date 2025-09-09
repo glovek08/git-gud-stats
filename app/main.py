@@ -1,53 +1,61 @@
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.openapi.utils import get_openapi
 from app import create_app
-from dotenv import load_dotenv  # type: ignore
+from dotenv import load_dotenv # type: ignore
+
+# from .routers import stats
 
 load_dotenv()
 
-app = FastAPI()
+app = create_app()
 
-# CORS for a Svelte dev server
+# app = FastAPI()
 
-origins = [
-    "http://localhost:5173",
-]
+# # CORS for a Svelte dev server
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# origins = [
+#     "http://localhost:5173",
+# ]
 
-app.include_router(stats.router)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
-@app.get("/")
-async def root():
-    return {"message": "Welcome to Git Gud Stats"}
+# app.include_router(stats.router)
 
-# shows Authorize button in Swagger UI
-def custom_openapi():
-    if app.openapi_schema:
-        return app.openapi_schema
-    schema = get_openapi(
-        title="GitHub Stats API",
-        version="0.1.0",
-        description="Fetch GitHub user data with optional Bearer token (PAT).",
-        routes=app.routes,
-    )
-    schema.setdefault("components", {}).setdefault("securitySchemes", {})
-    # Define the security scheme that can be used by the operations
-    # BETTER TO USE THE DEFAULT
-    # schema["components"]["securitySchemes"]["BearerAuth"] = {
-    #     "type": "http",
-    #     "scheme": "bearer",
-    #     "bearerFormat": "JWT",
-    #     "description": "Enter your GitHub Personal Access Token"
-    # }
+# @app.get("/")
+# async def root():
+#     return {"message": "Welcome to Git Gud Stats"}
 
-    # this security scheme is a global setting but can be overwittern
-    schema["security"] = [{"BearerAuth": []}]
-    app.openapi_schema = schema
-    return schema
+# # shows Authorize button in Swagger UI
+# def custom_openapi():
+#     if app.openapi_schema:
+#         return app.openapi_schema
+#     schema = get_openapi(
+#         title="GitHub Stats API",
+#         version="0.1.0",
+#         description="Fetch GitHub user data with optional Bearer token (PAT).",
+#         routes=app.routes,
+#     )
+#     schema.setdefault("components", {}).setdefault("securitySchemes", {})
+#     # Define the security scheme that can be used by the operations
+#     # BETTER TO USE THE DEFAULT
+#     # schema["components"]["securitySchemes"]["BearerAuth"] = {
+#     #     "type": "http",
+#     #     "scheme": "bearer",
+#     #     "bearerFormat": "JWT",
+#     #     "description": "Enter your GitHub Personal Access Token"
+#     # }
 
-app.openapi = custom_openapi
+#     # this security scheme is a global setting but can be overwittern
+#     schema["security"] = [{"BearerAuth": []}]
+#     app.openapi_schema = schema
+#     return schema
+
+# app.openapi = custom_openapi
+
