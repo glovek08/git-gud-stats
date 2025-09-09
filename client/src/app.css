@@ -1,15 +1,3 @@
-:root {
-    --main-bg: rgb(36, 38, 39);
-    --main-font: 
-}
-:root.light {
-    --main-bg: rgb(236, 248, 250);
-}
-
-body {
-    background-color: var(--main-bg);
-}
-
 @import "tailwindcss";
 @plugin 'flowbite/plugin';
 @custom-variant dark (&:where(.dark, .dark *));
