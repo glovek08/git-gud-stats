@@ -10,9 +10,15 @@ load_dotenv()
 app = FastAPI()
 
 # CORS for a Svelte dev server
+
+origins = [
+    "http://localhost:5173",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
