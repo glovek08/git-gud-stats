@@ -13,18 +13,22 @@
 
 
 Start Developing:
-```
-pip install -r requirements.txt
+
+First, create your virtual environment.
+
+Then run:
+```bash
+(venv) $ pip install -r requirements.txt
 ```
 
 Run the server:
-```
-fastapi dev main.py
+```bash
+(venv) $ fastapi dev app/main.py
 ```
 
 
 Set up your GH Token in an .env
-```
+```py
 GITHUB_TOKEN=<Your token>
 ```
 
