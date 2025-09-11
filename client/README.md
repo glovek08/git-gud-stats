@@ -1,33 +1,32 @@
 # sv
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Everything you need to build a Svelte project, powered by [sv](https://github.com/sveltejs/cli).
 
-## Creating a project
+![SvelteKit](https://img.shields.io/badge/SvelteKit-2.22-FF3E00?logo=svelte&logoColor=white&style=for-the-badge)
+![Svelte](https://img.shields.io/badge/Svelte-5.0.0-FF3E00?logo=svelte&logoColor=white&style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.0-38B2AC?logo=tailwindcss&logoColor=white&style=for-the-badge)
+![Vite](https://img.shields.io/badge/Vite-7.0.4-646CFF?logo=vite&logoColor=white&style=for-the-badge)
+![Flowbite](https://img.shields.io/badge/Flowbite-3.1.2-0E7490?logo=flowbite&logoColor=white&style=for-the-badge)
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```sh
-# create a new project in the current directory
-npx sv create
+### Flowbite Integration
 
-# create a new project in my-app
-npx sv create my-app
-```
+Flowbite uses Tailwind to customize components.
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+* <strong><i>Note!</i></strong> If you see the error `Unknown at rule @tailwind css(unknownAtRules)`:
+    1) Create `.vscode/settings.json`
+    2) Add this to ensure VSCode uses Tailwind with CSS files:
+        ```css
+        {
+            "files.associations": {
+                "*.css": "tailwindcss"
+            }
+        }
+        ```
 
 ## Building
 
-To create a production version of your app:
+To create a production version of this app:
 
 ```sh
 npm run build

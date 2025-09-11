@@ -2,7 +2,9 @@
 	import "../app.css";
 	import favicon from '$lib/assets/favicon.svg';
 	import "the-new-css-reset/css/reset.css";
-	import "../styles/app.css";
+
+	// Components
+	import Header from "$lib/Header.svelte";
 	
 	let { children } = $props();
 </script>
@@ -10,7 +12,7 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-<header></header>
+<Header></Header>
 {@render children?.()}
 
 <style>
