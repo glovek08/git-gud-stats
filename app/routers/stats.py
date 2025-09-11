@@ -13,10 +13,13 @@ router = APIRouter(
 GITHUB_API_URL = "https://api.github.com/users/"
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 
+
 @router.get("/user/{username}")
 async def get_github_user(
     username: str,
-    credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme),
+    credentials: Optional[HTTPAuthorizationCredentials] = Security(
+        bearer_scheme
+    ),
 ):
     token = extract_token(credentials)
     headers = build_headers(token)
@@ -28,14 +31,20 @@ async def get_github_user(
             raise HTTPException(status_code=resp.status_code, detail=resp.text)
         return resp.json()
 
+
 @router.get("/graphql-user/{username}")
-async def get_graphql_user_data(username: str, credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme)):
+async def get_graphql_user_data(
+    username: str,
+    credentials: Optional[HTTPAuthorizationCredentials] = Security(
+        bearer_scheme
+    ),
+):
     token = extract_token(credentials)
     if not token:
         raise HTTPException(status_code=401, detail="Github token is required")
 
     headers = build_headers(token)
-    headers['Content-type'] = 'application/json'
+    headers["Content-type"] = "application/json"
 
     query = """
         query($login: String!) {
@@ -58,33 +67,38 @@ async def get_graphql_user_data(username: str, credentials: Optional[HTTPAuthori
         }
     """
 
-    body = {
-        "query": query,
-        "variables": {
-            "login": username
-        }
-    }
+    body = {"query": query, "variables": {"login": username}}
 
     async with httpx.AsyncClient(timeout=15) as client:
-        resp = await client.post(GITHUB_GRAPHQL_URL, headers=headers, json=body)
+        resp = await client.post(
+            GITHUB_GRAPHQL_URL, headers=headers, json=body
+        )
 
         if resp.status_code != 200:
             raise HTTPException(status_code=resp.status_code, detail=resp.text)
-        
+
         data = resp.json()
 
-        if 'errors' in data:
-            raise HTTPException(status_code=400, detail=data['errors'])
+        if "errors" in data:
+            raise HTTPException(status_code=400, detail=data["errors"])
 
-        if data['data']['user'] is None:
+        if data["data"]["user"] is None:
             raise HTTPException(status_code=400, detail="user not found")
 
-        return data['data']['user']
+        return data["data"]["user"]
 
-@router.get("/debug/token") # tags=["debug"] use it to sort swagger ui endpoints
-def debug_token(credentials: Optional[HTTPAuthorizationCredentials] = Security(bearer_scheme)) -> Dict[str, Any]:
+
+@router.get(
+    "/debug/token"
+)  # tags=["debug"] use it to sort swagger ui endpoints
+def debug_token(
+    credentials: Optional[HTTPAuthorizationCredentials] = Security(
+        bearer_scheme
+    ),
+) -> Dict[str, Any]:
     """Diagnose how token is (or isn't) being received."""
     import os
+
     header_present = bool(credentials)
     env_token = os.getenv("GITHUB_TOKEN")
     env_present = bool(env_token)
@@ -98,10 +112,14 @@ def debug_token(credentials: Optional[HTTPAuthorizationCredentials] = Security(b
         data["header_token_length"] = len(token)
         data["header_preview_start"] = token[:4]
     if env_present:
-        data.update({
-            "env_token_length": len(env_token),
-            "env_preview_start": env_token[:4],
-        })
-    data["effective_source"] = "header" if header_present else ("env" if env_present else None)
+        data.update(
+            {
+                "env_token_length": len(env_token),
+                "env_preview_start": env_token[:4],
+            }
+        )
+    data["effective_source"] = (
+        "header" if header_present else ("env" if env_present else None)
+    )
     data["received"] = header_present or env_present
     return data

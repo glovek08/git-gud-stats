@@ -4,6 +4,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
+
 def build_headers(token: Optional[str]) -> Dict[str, str]:
     h = {
         "Accept": "application/vnd.github+json",
@@ -14,7 +15,10 @@ def build_headers(token: Optional[str]) -> Dict[str, str]:
         h["Authorization"] = f"Bearer {token}"
     return h
 
-def extract_token(credentials: Optional[HTTPAuthorizationCredentials]) -> Optional[str]:
+
+def extract_token(
+    credentials: Optional[HTTPAuthorizationCredentials],
+) -> Optional[str]:
     """
     Accept:
       Authorization: Bearer <token>
