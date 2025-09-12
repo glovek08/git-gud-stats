@@ -1,5 +1,5 @@
 # this workflow to activate on each push to repository
-name: WorkFlow for test before push
+name: WorkFlow for test before merge
 on: [push]
 jobs:
     Run-checks:
@@ -8,7 +8,7 @@ jobs:
             - name: Check out repository code
             # this step use the oficial action to clone the repository
               uses: actions/checkout@v4
-            - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+            - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
 
             # set up the environment of python
             - name: Set up Python
@@ -19,10 +19,34 @@ jobs:
             # installing all dependeces of the project write on requeriments.txt
             - name: Install dependencies
               run: |
-               python -m pip install --upgrade pip
-               pip install -r requirements.txt
+                python -m pip install --upgrade pip
+                pip install -r requirements.txt
 
-            # run all test of the project using pytest
-            - name: Run tests
+          # run all test of the project using pytest 
+            - name: Run tests and check percentage
               run: |
-               pytest
+                pip install pytest-cov
+
+                pytest --cov=.| tee pytest-output.txt
+
+                # Capture the coverage percentage 
+                COVERAGE_PERCENTAGE=$(grep -oE 'TOTAL\s+[0-9]+\s+[0-9]+\s+([0-9]+)%' pytest-output.txt | awk '{print $4}' | tr -d '%')
+
+                # Fallback solution just in case the above fails
+                if [ -z "$COVERAGE_PERCENTAGE" ]; then
+                  COVERAGE_PERCENTAGE=$(grep -oE 'TOTAL\s+[0-9]+%' pytest-output.txt | awk '{print $2}' | tr -d '%')
+                fi
+
+                # Check that the variable is not empty
+                if [ -z "$COVERAGE_PERCENTAGE" ]; then
+                  echo "The coverage percentage could not be obtained."
+                  exit 1
+                fi
+
+                # Check if the percentage is less than 60%
+                if [ "$COVERAGE_PERCENTAGE" -lt 60 ]; then
+                  echo "Code coverage: (${COVERAGE_PERCENTAGE}%) is less than the required 60%."
+                  exit 1
+                else
+                  echo "Code coverage: (${COVERAGE_PERCENTAGE}%). All good!"
+                fi
