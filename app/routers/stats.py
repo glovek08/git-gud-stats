@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials
 from typing import Optional, Dict, Any
+from ..utils.language_stats import get_language_resume
 import httpx
+import uuid
 
-from ..dependencies import bearer_scheme, build_headers, extract_token
+from ..utils.dependencies import bearer_scheme, build_headers, extract_token
 
 router = APIRouter(
     prefix="/stats",
@@ -50,10 +52,11 @@ async def get_graphql_user_data(
         query($login: String!) {
           user(login: $login) {
             name
-            repositories(first: 5, orderBy: {field: PUSHED_AT, direction: DESC}) {
+            repositories(first: 50, orderBy: {field: STARGAZERS, direction: DESC}, isFork: false, isArchived:false, privacy: PUBLIC) {
               nodes {
                 name
-                languages(first: 5, orderBy: {field: SIZE, direction: DESC}) {
+                diskUsage
+                languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
                   edges {
                     size
                     node {
@@ -84,9 +87,15 @@ async def get_graphql_user_data(
 
         if data["data"]["user"] is None:
             raise HTTPException(status_code=400, detail="user not found")
+        
 
-        return data["data"]["user"]
+        resp = {
+            "id": uuid.uuid4(),
+            "username": username, 
+            "stack": get_language_resume(data["data"]["user"])
+        }
 
+        return resp
 
 @router.get(
     "/debug/token"
