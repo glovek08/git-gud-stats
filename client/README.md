@@ -35,3 +35,38 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+# Front-end features
+
+### Index:
+
+1) [Theme Subscribable](#Theme_Subscribable)
+
+## Theme Subscribable
+
+A read-only Svelte store that reflects the current page theme ("light" | "dark") by observing the `.dark` class or `data-theme="dark"` on `<html>`/`<body>`.
+
+- Location: `src/lib/stores/theme.ts`
+- Export: `theme` (readable<'light' | 'dark'>)
+- Source of truth: presence of `.dark` or `data-theme="dark"`
+
+Usage
+```ts
+<script lang="ts">
+  import { theme } from '$lib/stores/theme';
+</script>
+
+<p>Current theme: {$theme}</p>
+```
+
+Notes
+- SSR: defaults to "light" during SSR and updates on mount.
+- Tailwind v4: tokens defined in `@theme` and `@theme .dark` auto-switch with `.dark` — use utilities like `bg-bg-primary`, `text-primary-500` without needing `dark:` variants.
+- Ensure your toggle sets/removes `.dark` on `<html>` (Flowbite’s DarkMode or your own logic).
+
+Example (Tailwind token usage)
+```html
+<div class="bg-bg-primary text-primary-900 p-4 rounded">
+  Theme is {$theme}
+</div>
+```
