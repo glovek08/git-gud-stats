@@ -1,41 +1,22 @@
 <script lang="ts">
-  import {
-    Footer,
-    FooterCopyright,
-    FooterLinkGroup,
-    FooterLink,
-    FooterBrand,
-    FooterIcon,
-  } from "flowbite-svelte";
-  import {
-    FacebookSolid,
-    GithubSolid,
-    DiscordSolid,
-    TwitterSolid,
-  } from "flowbite-svelte-icons";
-  import { theme } from "./stores/theme";
+  import { Footer, FooterCopyright, FooterLinkGroup,
+    FooterLink, FooterIcon, } from "flowbite-svelte";
+  import { FacebookSolid, GithubSolid, DiscordSolid, TwitterSolid, } from "flowbite-svelte-icons";
   import logoDark from "$lib/assets/GitGudStats_logo_dark.svg";
   import logoLight from "$lib/assets/GitGudStats_logo_light.svg";
-  const logoSrc = $derived(
-    $theme === "dark" ? logoLight : logoDark);
 </script>
 
 <Footer footerType="socialmedia">
   <div class="md:flex md:justify-between">
     <div class="mb-6 md:mb-0">
-      <!-- Change logo crap on $theme -->
-      <FooterBrand
-        href="/"
-        src={logoSrc}
-        alt="GitGudStats Logo"
-        name="GitGudStats"
-      />
+      <a href="/" class="flex items-center">
+        <img src={logoDark} class="mr-3 h-8 dark:hidden" alt="GitGudStats Logo" />
+        <img src={logoLight} class="mr-3 h-8 hidden dark:block" alt="GitGudStats Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">GitGudStats</span>
+      </a>
     </div>
     <div class="gap-8 sm:gap-6 grid grid-cols-2 sm:grid-cols-3">
-      <div>
-        <h2
-          class="mb-6 font-semibold text-gray-900 dark:text-white text-sm uppercase"
-        >
+      <div><h2 class="mb-6 font-semibold text-gray-900 dark:text-white text-sm uppercase">
           Resources
         </h2>
         <FooterLinkGroup>
