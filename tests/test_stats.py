@@ -8,6 +8,9 @@ from app.routers.stats import GITHUB_API_URL
 
 client = TestClient(app)
 
+"""
+-------------------------------- FIRST ENDPOINT --------------------------------
+"""
 @pytest.fixture
 def auth_header():
     return {"Authorization": "Bearer fake_token"}
@@ -42,3 +45,8 @@ def test_get_github_user_api_error(auth_header):
 
     assert response.status_code == 500
     assert response.json()["detail"] == "Internal Server Error"
+
+
+"""
+-------------------------------- ENDPOINT GRAPHQL --------------------------------
+"""
