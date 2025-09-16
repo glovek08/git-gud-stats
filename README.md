@@ -13,25 +13,33 @@
 
 
 Start Developing:
-```
-pip install -r requirements.txt
+
+1) Create your virtual environment.
+
+2) Install FastAPI dependencies:
+```bash
+(venv) $ pip install -r requirements.txt
 ```
 
-Run the server:
-```
-fastapi dev main.py
-```
-
-
-Set up your GH Token in an .env
-```
+3) Set up your GH Token in an .env
+```py
 GITHUB_TOKEN=<Your token>
+```
+
+4) Run the FastAPI server:
+```bash
+# Navigate to app/
+(venv) $ fastapi dev main.py
+```
+
+5) Run the Vite server:
+```bash
+# Navigate to client/
+(venv) $ npm run dev
 ```
 
 
 # About `git-gud-stats`
-
-## Introduction
 
 `git-gud-stats` is a Python-based backend service built with the high-performance [FastAPI](https://fastapi.tiangolo.com/) framework. Its purpose is to fetch, process, and serve statistics for any GitHub user by leveraging the power of GitHub's public APIs.
 

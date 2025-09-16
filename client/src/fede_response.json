@@ -1,0 +1,15 @@
+{
+    "id": 123213,
+    "first_name": "Pepe",
+    "last_name": "Jorge",
+    "stack": [
+        {
+            "lang": "Python",
+            "lines": 4000
+        },
+        {
+            "lang": "Javascript",
+            "lines": 1230
+        }
+    ]
+}
