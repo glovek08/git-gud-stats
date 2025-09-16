@@ -6,11 +6,11 @@
   import logoLight from "$lib/assets/GitGudStats_logo_light.svg";
 </script>
 
-<Navbar class="p-5">
+<Navbar class="p-5 bg-white dark:bg-amber-50">
   <NavBrand href="/">
     <img src={logoDark} class="h-6 sm:h-9 dark:hidden" alt="GitGudStats Logo" />
     <img src={logoLight} class="h-6 sm:h-9 hidden dark:block" alt="GitGudStats Logo" />
-    <span class="self-center font-semibold dark:text-white text-xl whitespace-nowrap ml-3">GitGudStats</span>
+    <span class="self-center font-semibold dark:text-fg text-xl whitespace-nowrap ml-3">GitGudStats</span>
   </NavBrand>
   <div class="flex items-center md:order-2">
     <Avatar

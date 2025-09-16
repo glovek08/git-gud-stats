@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { theme } from '$lib/stores/theme';
+    // import { theme } from '$lib/stores/theme';
 </script>
 
 <section id="main-wrapper">
@@ -8,6 +8,6 @@
 
 <style>
     #main-wrapper {
-        min-height: 100dvh;
+        min-height: 95dvh;
     }
 </style>

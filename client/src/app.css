@@ -27,8 +27,13 @@
   --color-secondary-900: #633720;
   --color-secondary-950: #391b0f;
 
-  --color-bg-primary: rgb(238, 232, 232);
-  --color-bg-primary-dark: rgb(17, 18, 20);
+  --color-bg: rgb(238, 232, 232);
+  --color-fg: rgb(27, 26, 26);
+}
+
+@theme .dark {
+  --color-bg: rgb(17, 18, 20);
+  --color-fg: rgb(212, 212, 212);
 }
 
 
