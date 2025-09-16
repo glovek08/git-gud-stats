@@ -6,7 +6,7 @@
   import logoLight from "$lib/assets/GitGudStats_logo_light.svg";
 </script>
 
-<Footer footerType="socialmedia">
+<Footer footerType="socialmedia" class="bg-header-bg dark:bg-header-bg-dark">
   <div class="md:flex md:justify-between">
     <div class="mb-6 md:mb-0">
       <a href="/" class="flex items-center">

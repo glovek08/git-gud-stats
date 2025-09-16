@@ -27,14 +27,20 @@
   --color-secondary-900: #633720;
   --color-secondary-950: #391b0f;
 
-  --color-bg: rgb(238, 232, 232);
+  --color-bg: rgb(245, 243, 243);
+  --color-bg-dark: rgb(31, 29, 29);
+
+  --color-header-bg: white;
+  --color-header-bg-dark: black;
+
   --color-fg: rgb(27, 26, 26);
+  --color-fg-dark: rgb(240, 233, 233);
 }
 
-@theme .dark {
-  --color-bg: rgb(17, 18, 20);
+/* @theme .dark { //Flowbite doesn't give a fuck about tailwind's dark theme
+  --color-bg: rgb(40, 42, 46);
   --color-fg: rgb(212, 212, 212);
-}
+} */
 
 
 
