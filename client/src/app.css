@@ -1,0 +1,52 @@
+@import "tailwindcss";
+@plugin 'flowbite/plugin';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme { /* Same shit as classes */
+  --color-primary-50: #f1f5fd;
+  --color-primary-100: #dfe8fa;
+  --color-primary-200: #c6d7f7;
+  --color-primary-300: #a0bdf0;
+  --color-primary-400: #729ae8;
+  --color-primary-500: #5178e0;
+  --color-primary-600: #3c5cd4;
+  --color-primary-700: #334ac2;
+  --color-primary-800: #2f3d9e;
+  --color-primary-900: #2b377d;
+  --color-primary-950: #252c5e;
+
+  --color-secondary-50: #fbf7eb;
+  --color-secondary-100: #f6eccb;
+  --color-secondary-200: #edd89b;
+  --color-secondary-300: #e0b651;
+  --color-secondary-400: #d9a236;
+  --color-secondary-500: #ca8c28;
+  --color-secondary-600: #ae6d20;
+  --color-secondary-700: #8b4f1d;
+  --color-secondary-800: #74411f;
+  --color-secondary-900: #633720;
+  --color-secondary-950: #391b0f;
+
+  --color-bg: rgb(238, 232, 232);
+  --color-fg: rgb(27, 26, 26);
+}
+
+@theme .dark {
+  --color-bg: rgb(17, 18, 20);
+  --color-fg: rgb(212, 212, 212);
+}
+
+
+
+@source "../node_modules/flowbite-svelte/dist";
+@source "../node_modules/flowbite-svelte-icons/dist";
+
+@layer base {
+  /* disable chrome cancel button */
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
+  /* html, body {
+    background-color: black;
+  } */
+}
