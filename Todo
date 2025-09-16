@@ -1,0 +1,4 @@
+1. Load the private key from the .pem file.
+2. Use the App ID and private key to generate a JSON Web Token (JWT).
+3. Use that JWT to call the GitHub API and get a temporary installation access token.
+4. Use that installation token in the Authorization header for your existing GraphQL query.
