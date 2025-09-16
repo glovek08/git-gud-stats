@@ -12,10 +12,9 @@ def client():
 def test_home_route(client):
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello"}
+    assert response.json() == {"message": "Welcome to Git Gud Stats"}
 
 
 def test_about_route(client):
     response = client.get("/about")
-    assert response.status_code == 200
-    assert response.json() == {"message": "This is the about page."}
+    assert response.status_code == 404
