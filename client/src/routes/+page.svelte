@@ -7,7 +7,7 @@
 </section>
 
 <style>
-    #main-wrapper {
-        min-height: 95dvh;
-    }
+    /* #main-wrapper {
+        min-height: 900px;
+    } */
 </style>

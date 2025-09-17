@@ -36,9 +36,22 @@
 	/>
 	<link rel="icon" type="image/svg+xml" href={currentFavicon} />
 </svelte:head>
-<Header></Header>
-{@render children?.()}
-<Footer></Footer>
+<div class="layout-container">
+	<Header />
+	<main class="main-content">
+		{@render children?.()}
+	</main>
+	<Footer />
+</div>
 
 <style>
+	.layout-container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+	.main-content {
+		flex: 1 1 auto;
+		min-height: 100%;
+	}
 </style>

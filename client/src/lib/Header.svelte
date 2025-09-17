@@ -1,18 +1,24 @@
 <script lang="ts">
   import { Navbar, DarkMode, NavBrand, NavLi, NavUl, NavHamburger, Avatar,
-    Dropdown, DropdownItem, DropdownHeader, DropdownGroup, } from "flowbite-svelte";
-  //const currentFavicon = $derived($theme === 'dark' ? favicon_light : favicon_dark);
+    Dropdown, DropdownItem, DropdownHeader, DropdownGroup, Button } from "flowbite-svelte";
   import logoDark from "$lib/assets/GitGudStats_logo_dark.svg";
   import logoLight from "$lib/assets/GitGudStats_logo_light.svg";
+
+  import { isAuth } from './stores/auth'; 
 </script>
 
-<Navbar class="p-5 bg-header-bg dark:bg-header-bg-dark">
+<Navbar class="p-5 bg-header-bg">
   <NavBrand href="/">
     <img src={logoDark} class="h-6 sm:h-9 dark:hidden" alt="GitGudStats Logo" />
     <img src={logoLight} class="h-6 sm:h-9 hidden dark:block" alt="GitGudStats Logo" />
-    <span class="self-center font-semibold dark:text-fg-dark text-xl whitespace-nowrap ml-3">GitGudStats</span>
+    <span class="self-center font-semibold text-xl whitespace-nowrap ml-3">GitGudStats</span>
   </NavBrand>
-  <div class="flex items-center md:order-2">
+
+  <DarkMode class="mr-5 ml-auto hover:cursor-pointer"></DarkMode>
+
+
+  {#if $isAuth}
+    <div class="flex items-center md:order-2">
     <Avatar
       id="avatar-menu"
       src="/user_pfp.jpeg"
@@ -20,9 +26,21 @@
     />
     <!-- <NavHamburger /> This will display the NavUl -->
   </div>
-  <DarkMode class="mr-5 ml-auto hover:cursor-pointer"></DarkMode>
+  {/if}
+  {#if !$isAuth}
+    <a href="/login"> <Button outline>Default</Button></a>
+  {/if}
 
-  <Dropdown placement="bottom" triggeredBy="#avatar-menu">
+  <!-- From here to bottom are some useful stuff for maybe later -->
+
+  <!-- <NavUl> These are header buttons, leave them just in case you want to reimplement them.
+    <NavLi href="/">Home</NavLi>
+    <NavLi href="/about">About</NavLi>
+    <NavLi href="/docs/components/navbar">Navbar</NavLi>
+    <NavLi href="/pricing">Pricing</NavLi>
+    <NavLi href="/contact">Contact</NavLi>
+  </NavUl> -->
+    <!-- <Dropdown placement="bottom" triggeredBy="#avatar-menu">
     <DropdownHeader class="hover:cursor-pointer">
       <span class="block text-sm">Pepe Gutierrez</span>
       <span class="block font-medium text-sm truncate">pepe81</span>
@@ -33,12 +51,5 @@
       <DropdownItem>Legal</DropdownItem>
     </DropdownGroup>
     <DropdownHeader>Sign out</DropdownHeader>
-  </Dropdown>
-  <!-- <NavUl> These are header buttons, leave them just in case you want to reimplement them.
-    <NavLi href="/">Home</NavLi>
-    <NavLi href="/about">About</NavLi>
-    <NavLi href="/docs/components/navbar">Navbar</NavLi>
-    <NavLi href="/pricing">Pricing</NavLi>
-    <NavLi href="/contact">Contact</NavLi>
-  </NavUl> -->
+  </Dropdown> -->
 </Navbar>
