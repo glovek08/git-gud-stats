@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import stats
+from .api import stats
 from fastapi.openapi.utils import get_openapi
+
 
 def create_app():
     app = FastAPI()
-    
+
     origins = [
         "http://localhost:5173",
     ]
@@ -17,9 +18,9 @@ def create_app():
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    
+
     app.include_router(stats.router)
-    
+
     @app.get("/")
     async def root():
         return {"message": "Welcome to Git Gud Stats"}
@@ -50,5 +51,5 @@ def create_app():
         return schema
 
     app.openapi = custom_openapi
-    
+
     return app

@@ -52,6 +52,8 @@ async def get_graphql_user_data(
         query($login: String!) {
           user(login: $login) {
             name
+            login
+            avatarUrl
             repositories(first: 50, orderBy: {field: STARGAZERS, direction: DESC}, isFork: false, isArchived:false, privacy: PUBLIC) {
               nodes {
                 name
@@ -87,15 +89,16 @@ async def get_graphql_user_data(
 
         if data["data"]["user"] is None:
             raise HTTPException(status_code=400, detail="user not found")
-        
 
         resp = {
             "id": uuid.uuid4(),
-            "username": username, 
-            "stack": get_language_resume(data["data"]["user"])
+            "username": username,
+            "avatar_url": data["data"]["user"]["avatarUrl"],
+            "stack": get_language_resume(data["data"]["user"]),
         }
 
         return resp
+
 
 @router.get(
     "/debug/token"
