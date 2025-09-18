@@ -19,7 +19,7 @@
   import { isAuth } from "./stores/auth";
 </script>
 
-<Navbar class="p-5 bg-header-bg">
+<Navbar class="bg-header-bg">
   <NavBrand href="/">
     <img src={logoDark} class="h-6 sm:h-9 dark:hidden" alt="GitGudStats Logo" />
     <img
@@ -35,12 +35,12 @@
   <DarkMode class="mr-5 ml-auto hover:cursor-pointer"></DarkMode>
 
   {#if $isAuth}
-    <div class="flex items-center md:order-2">
+    <div class="flex items-center md:order-2 hover:cursor-pointer">
+      <!-- <Avatar id="avatar-menu" src="/user_pfp.jpeg" class="hover:cursor-pointer"/> -->
       <Avatar
-        id="avatar-menu"
-        src="/user_pfp.jpeg"
-        class="hover:cursor-pointer"
-      />
+      id="avatar-menu"
+      src="https://media.licdn.com/dms/image/v2/D4D03AQEKpb81QDXHgA/profile-displayphoto-shrink_200_200/B4DZTWbbvcGkAc-/0/1738764305144?e=2147483647&v=beta&t=uwplIo_d4M5Ho0q3udJV5LJ7UbzigeT8zyRthdKEQ9M"
+      border size="sm" class="active:ring-primary-500 dark:active-primary-500" />
       <Dropdown placement="bottom" triggeredBy="#avatar-menu">
         <DropdownHeader class="hover:cursor-pointer">
           <span class="block text-sm">Pepe Gutierrez</span>

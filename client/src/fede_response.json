@@ -1,7 +1,8 @@
 {
     "id": 123213,
-    "first_name": "Pepe",
-    "last_name": "Jorge",
+    "firstName": "Pepe",
+    "lastName": "Jorge",
+    "avatarUrl": "https://github.com/images/error/octocat_happy.gif",
     "stack": [
         {
             "lang": "Python",
