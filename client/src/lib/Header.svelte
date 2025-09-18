@@ -40,7 +40,7 @@
       <Avatar
       id="avatar-menu"
       src="https://media.licdn.com/dms/image/v2/D4D03AQEKpb81QDXHgA/profile-displayphoto-shrink_200_200/B4DZTWbbvcGkAc-/0/1738764305144?e=2147483647&v=beta&t=uwplIo_d4M5Ho0q3udJV5LJ7UbzigeT8zyRthdKEQ9M"
-      border size="sm" class="active:ring-primary-500 dark:active-primary-500" />
+      border size="sm" class="focus:ring-primary-500 dark:focus:ring-primary-500 dark:bg-black" />
       <Dropdown placement="bottom" triggeredBy="#avatar-menu">
         <DropdownHeader class="hover:cursor-pointer">
           <span class="block text-sm">Pepe Gutierrez</span>
