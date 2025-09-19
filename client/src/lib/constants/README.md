@@ -1,0 +1,1 @@
+This directory contains constants, for example the color for the fucking languages.

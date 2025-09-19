@@ -53,5 +53,8 @@
 	.main-content {
 		flex: 1 1 auto;
 		min-height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

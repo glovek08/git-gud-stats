@@ -4,13 +4,13 @@
     import PieChart from "$lib/PieChart.svelte";
 </script>
 
-<section id="main-wrapper">
-    <h1>Hello</h1>
-    <PieChart/>
-</section>
+<PieChart/>
 
 <style>
     /* #main-wrapper {
-        min-height: 900px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: 1px solid red;
     } */
 </style>
